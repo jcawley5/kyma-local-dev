@@ -19,7 +19,7 @@ spec:
                 - name: param2
                   value: value2
               name: examplefn
-  deps: >-
+  deps: >
     {
       "name": "examplefn",
       "main": "examplefn.js",
