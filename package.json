@@ -1,7 +1,6 @@
 {
   "name": "examplefn",
   "main": "examplefn.js",
-  "function_trigger": "http",
   "license": "Unlicense",
   "dependencies": {
     "axios": "^0.18.1"
@@ -14,5 +13,11 @@
   },
   "scripts": {
     "deploymentYaml": "node -e 'require(\"./build\").deploymentYaml()'"
+  },
+  "buildParameters": {
+    "function_trigger": "http",
+    "function_size": "XS",
+    "namespace": "stage",
+    "buildAPI": true
   }
 }

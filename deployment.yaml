@@ -3,47 +3,53 @@ kind: Function
 metadata:
   annotations:
     function-size: XS
-  finalizers:
-    - kubeless.io/function
-  generation: 1
+  labels:
+    app: examplefn
   name: examplefn
+  namespace: stage
 spec:
   deployment:
-    metadata:
-      creationTimestamp: {}
     spec:
-      replicas: 1
-      strategy: {}
       template:
-        metadata:
-          creationTimestamp: {}
         spec:
           containers:
             - env:
-                - {}
-              name: rate-review
-    status: {}
-  deps:
-    name: examplefn
-    main: examplefn.js
-    function_trigger: http
-    license: Unlicense
-    dependencies:
-      axios: ^0.18.1
-    devDependencies:
-      dotenv: ^8.2.0
-      fs: 0.0.1-security
-      json-parameterization: ^2.0.0
-      yaml: ^1.7.2
-    scripts:
-      deploymentYaml: node -e 'require("./build").deploymentYaml()'
+                - name: header1
+                  value: testheader
+                - name: param2
+                  value: value2
+              name: examplefn
+  deps: |
+    {
+      "name": "examplefn",
+      "main": "examplefn.js",
+      "license": "Unlicense",
+      "dependencies": {
+        "axios": "^0.18.1"
+      },
+      "devDependencies": {
+        "dotenv": "^8.2.0",
+        "fs": "0.0.1-security",
+        "json-parameterization": "^2.0.0",
+        "yaml": "^1.7.2"
+      },
+      "scripts": {
+        "deploymentYaml": "node -e 'require(\"./build\").deploymentYaml()'"
+      },
+      "buildParameters": {
+        "function_trigger": "http",
+        "function_size": "XS",
+        "namespace": "stage",
+        "buildAPI": true
+      }
+    }
   function: |
     const axios = require("axios");
 
     module.exports = {
       main: async function(event, context) {
         const Url = "https://httpbin.org/anything";
-        console.log("sending get to: ", Url);
+        console.log("sending get to::: ", Url);
         const { data: result } = await axios.get(Url, {
           params: { header1: process.env.header1 }
         });
@@ -58,17 +64,19 @@ spec:
       labels:
         function: examplefn
       name: examplefn
-    spec: {}
-    status: {}
+      namespace: stage
+    spec:
+      maxReplicas: 1
+      metrics:
+        - resource:
+            name: cpu
+            targetAverageUtilization: 50
+          type: Resource
+      minReplicas: 1
+      scaleTargetRef:
+        apiVersion: apps/v1beta1
+        kind: Deployment
+        name: examplefn
   runtime: nodejs8
-  service:
-    ports:
-      - name: http-function-port
-        port: 8080
-        protocol: TCP
-        targetPort: 8080
-    selector:
-      created-by: kubeless
-      function: examplefn
   timeout: ""
   topic: http

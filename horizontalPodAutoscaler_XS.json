@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "labels": {
+      "function": "{{function_name}}"
+    },
+    "name": "{{function_name}}",
+    "namespace": "{{namespace}}"
+  },
+  "spec": {
+    "maxReplicas": 1,
+    "metrics": [
+      {
+        "resource": {
+          "name": "cpu",
+          "targetAverageUtilization": 50
+        },
+        "type": "Resource"
+      }
+    ],
+    "minReplicas": 1,
+    "scaleTargetRef": {
+      "apiVersion": "apps/v1beta1",
+      "kind": "Deployment",
+      "name": "{{function_name}}"
+    }
+  }
+}

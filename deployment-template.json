@@ -1,0 +1,38 @@
+{
+  "apiVersion": "kubeless.io/v1beta1",
+  "kind": "Function",
+  "metadata": {
+    "annotations": {
+      "function-size": "{{function_size}}"
+    },
+    "labels": {
+      "app": "{{function_name}}"
+    },
+    "name": "{{function_name}}",
+    "namespace": "{{namespace}}"
+  },
+  "spec": {
+    "deployment": {
+      "spec": {
+        "template": {
+          "spec": {
+            "containers": [
+              {
+                "env": "{{environment_variables}}",
+                "name": "{{function_name}}"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "deps": "{{function_deps}}",
+    "function": "{{function_code}}",
+    "function-content-type": "text",
+    "handler": "handler.main",
+    "horizontalPodAutoscaler": "{{horizontalPodAutoscaler}}",
+    "runtime": "nodejs8",
+    "timeout": "",
+    "topic": "{{function_trigger}}"
+  }
+}
