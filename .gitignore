@@ -1,3 +1,6 @@
+# git action built deployment
+./build/deployment.yaml
+
 # Logs
 logs
 *.log

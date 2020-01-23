@@ -6,12 +6,12 @@ const dotenv = require("dotenv");
 module.exports = {
   deploymentYaml: function() {
     const deploymentJSON = JSON.parse(
-      fs.readFileSync("deployment-template.json")
+      fs.readFileSync("./build/deployment-template.json")
     );
-    const packageStr = fs.readFileSync("package.json").toString();
+    const packageStr = fs.readFileSync("./package.json").toString();
     const packageJSON = JSON.parse(packageStr);
     const lamdbdCode = fs.readFileSync(packageJSON.main).toString();
-    const envVarData = dotenv.parse(fs.readFileSync(".env").toString());
+    const envVarData = dotenv.parse(fs.readFileSync("./.env").toString());
     const envVars = Object.entries(envVarData);
     var envArr = [];
 
@@ -36,7 +36,7 @@ module.exports = {
     const horizontalPodAutoscalerJSON = JSON.parse(
       fs
         .readFileSync(
-          "horizontalPodAutoscaler_" +
+          "./build/horizontalPodAutoscaler_" +
             packageJSON.buildParameters.function_size +
             ".json"
         )
@@ -49,6 +49,6 @@ module.exports = {
     );
 
     const deploymentYAML = parameterize(deploymentJSON, params);
-    fs.writeFileSync(`deployment.yaml`, yaml.stringify(deploymentYAML));
+    fs.writeFileSync(`./build/deployment.yaml`, yaml.stringify(deploymentYAML));
   }
 };
