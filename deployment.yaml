@@ -1,0 +1,75 @@
+apiVersion: kubeless.io/v1beta1
+kind: Function
+metadata:
+  annotations:
+    function-size: XS
+  finalizers:
+    - kubeless.io/function
+  generation: 1
+  name: examplefn
+spec:
+  deployment:
+    metadata:
+      creationTimestamp: {}
+    spec:
+      replicas: 1
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: {}
+        spec:
+          containers:
+            - env:
+                - {}
+              name: rate-review
+    status: {}
+  deps:
+    name: examplefn
+    main: examplefn.js
+    function_trigger: http
+    license: Unlicense
+    dependencies:
+      axios: ^0.18.1
+    devDependencies:
+      dotenv: ^8.2.0
+      fs: 0.0.1-security
+      json-parameterization: ^2.0.0
+      yaml: ^1.7.2
+    scripts:
+      deploymentYaml: node -e 'require("./build").deploymentYaml()'
+  function: >
+    const axios = require("axios");
+
+
+    module.exports = {
+      main: async function(event, context) {
+        const jobseekerUrl = "http://get-postings-fieldglass:8080"; //process.env.GATEWAY_URL + "/api/vc/connector/jobposting";
+        console.log("sending get to: ", jobseekerUrl);
+        const { data: result } = await axios.get(jobseekerUrl, {
+          params: { object_ref: "GEBOJP00000034" }
+        });
+
+        return result;
+      }
+    };
+  function-content-type: text
+  handler: handler.main
+  horizontalPodAutoscaler:
+    metadata:
+      labels:
+        function: examplefn
+      name: examplefn
+    spec: {}
+    status: {}
+  runtime: nodejs8
+  service:
+    ports:
+      - name: http-function-port
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      created-by: kubeless
+      function: examplefn
+  timeout: ""
+  topic: http
