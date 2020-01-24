@@ -2,6 +2,7 @@ var parameterize = require("json-parameterization");
 const fs = require("fs");
 const yaml = require("yaml");
 const dotenv = require("dotenv");
+const crypto = require("crypto");
 
 module.exports = {
   deploymentYaml: function() {
@@ -13,6 +14,13 @@ module.exports = {
     const lamdbdCode = fs.readFileSync(packageJSON.main).toString();
     const envVarData = dotenv.parse(fs.readFileSync("./.env").toString());
     const envVars = Object.entries(envVarData);
+    const sha256Str =
+      "sha256:" +
+      crypto
+        .createHash("sha256")
+        .update(lamdbdCode)
+        .digest("hex");
+
     var envArr = [];
 
     for (const [name, value] of envVars) {
@@ -30,7 +38,8 @@ module.exports = {
       function_deps: packageStr,
       function_code: lamdbdCode,
       function_trigger: packageJSON.buildParameters.function_trigger,
-      namespace: packageJSON.buildParameters.namespace
+      namespace: packageJSON.buildParameters.namespace,
+      checksum: sha256Str
     };
 
     const horizontalPodAutoscalerJSON = JSON.parse(

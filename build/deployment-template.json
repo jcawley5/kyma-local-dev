@@ -12,16 +12,15 @@
     "namespace": "{{namespace}}"
   },
   "spec": {
+    "checksum": "{{checksum}}",
     "deployment": {
       "spec": {
         "template": {
           "spec": {
-            "containers": [
-              {
-                "env": "{{environment_variables}}",
-                "name": "{{function_name}}"
-              }
-            ]
+            "containers": [{
+              "env": "{{environment_variables}}",
+              "name": "{{function_name}}"
+            }]
           }
         }
       }
