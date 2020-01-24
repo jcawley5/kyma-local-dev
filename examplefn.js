@@ -3,7 +3,7 @@ const axios = require("axios");
 module.exports = {
   main: async function(event, context) {
     const Url = "https://httpbin.org/anything";
-    console.log("sending test two get to ", Url);
+    console.log("sending test three get to ", Url);
     const { data: result } = await axios.get(Url, {
       params: { header1: process.env.header1 }
     });
