@@ -41,4 +41,5 @@ Local access to the service would then be acheivable via
 `http://3afe958e-6603-45f1-bdbb-789a676b5fa9.localhost:8088`
 
 For correct resolution of the service a DNS entry in your hosts file will need to be added
+
 `127.0.0.1       3afe958e-6603-45f1-bdbb-789a676b5fa9.localhost`
