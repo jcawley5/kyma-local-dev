@@ -20,7 +20,7 @@ jobs:
       run: |
         npm install
         npm run deploymentYaml
-# UNCOMMENT THESE LINES IF YOU WOULD LIKE TO COMMENT THE DEPLOYMENT.YAML  
+# UNCOMMENT THESE LINES IF YOU WOULD LIKE TO COMMIT THE DEPLOYMENT.YAML BACK TO THE REPO  
 #     - name: Commit files
 #       run: |
 #         echo ${{ github.ref }}
