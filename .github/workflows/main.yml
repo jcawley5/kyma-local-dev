@@ -22,18 +22,19 @@ jobs:
         npm run deploymentYaml
       env:
         CI: true
-    - name: Commit files
-      run: |
-        echo ${{ github.ref }}
-        git add .
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -m "ci: Automated build push" -a | exit 0
-    - name: Push changes
-      if: github.ref == 'refs/heads/master'
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+# UNCOMMENT THESE LINES IF YOU WOULD LIKE TO COMMENT THE DEPLOYMENT.YAML  
+#     - name: Commit files
+#       run: |
+#         echo ${{ github.ref }}
+#         git add .
+#         git config --local user.email "action@github.com"
+#         git config --local user.name "GitHub Action"
+#         git commit -m "ci: Automated build push" -a | exit 0
+#     - name: Push changes
+#       if: github.ref == 'refs/heads/master'
+#       uses: ad-m/github-push-action@master
+#       with:
+#         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: deploy to cluster
       uses: steebchen/kubectl@master
       env:
