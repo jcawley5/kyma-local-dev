@@ -17,7 +17,6 @@
   "buildParameters": {
     "function_trigger": "http",
     "function_size": "XS",
-    "namespace": "stage",
-    "buildAPI": true
+    "namespace": "stage"
   }
 }
