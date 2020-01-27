@@ -8,7 +8,7 @@ metadata:
   name: examplefn
   namespace: stage
 spec:
-  checksum: sha256:bb46d86f35351cea1e4bfa697796588edb23d5d7e01645e204fd21eb9027e764
+  checksum: sha256:d052fe07dac6f3001098f438fa6d9db0bddade313e6976cc3aee53369f3e16f9
   deployment:
     spec:
       template:
@@ -48,11 +48,14 @@ spec:
 
     module.exports = {
       main: async function(event, context) {
+        console.log("env variable header1: ", process.env["header1"]);
+
         const Url = "https://httpbin.org/anything";
         console.log("sending test four get to ", Url);
         const { data: result } = await axios.get(Url, {
           params: { header1: process.env.header1 }
         });
+
         console.log(result);
         return result;
       }
