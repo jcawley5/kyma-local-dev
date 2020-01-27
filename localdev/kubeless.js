@@ -10,6 +10,9 @@ const express = require("express");
 const helper = require("./lib/helper");
 const morgan = require("morgan");
 
+//added for env variables!!!
+require("./localdevenv");
+
 const bodySizeLimit = Number(process.env.REQ_MB_LIMIT || "1");
 
 const app = express();
