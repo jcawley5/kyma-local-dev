@@ -1,10 +1,10 @@
-##Deployment via git action.
+## Deployment via git action.
 
 After cloning the repo, within github choose `Settings` -> `Secrets` and add the secret `KUBE_CONFIG_DATA` and place a base64 encoded version of your clusters kubeconfig which can be performed by using `https://www.base64encode.org/` or via cli tools. This of course could be automated by relying on the cli tools of your cloud provider.
 
 The parameters for deployment are defined within the `package.json` within the `buildParameters` object.
 
-##Local Development - Kubeless
+## Local Development - Kubeless
 
 Local development relies on kubeless runtime which can be found at
 
@@ -24,7 +24,7 @@ Which will make it available at
 
 The file `localdevenv.js` was added to enabled the support of envirnoment variables where as the envirnoment variables used by the function are defined in `.env`. 
 
-##Local Development - Service Bindings
+## Local Development - Service Bindings
 
 Service Bindings that are configured in the kyma ui should be referenced within the localdevenv file and can be made available by using the port-forward feature of kubectl for example
 
