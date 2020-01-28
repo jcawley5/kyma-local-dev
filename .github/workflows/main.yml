@@ -1,4 +1,4 @@
-name: CI
+name: kyma function deployment
 
 on:
   push:
@@ -16,10 +16,12 @@ jobs:
       with:
         node-version: '12.x'
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: NodeJS Project Information
+      uses: gregoranders/nodejs-project-info@v0.0.1
     - name: Run ESLint
       uses: stefanoeb/eslint-action@1.0.2
       with:
-        files: ./*.js 
+        files: ${{ steps.projectinfo.outputs.name }}.js 
     - name: build deploymentyaml
       run: |
         npm run deploymentYaml
