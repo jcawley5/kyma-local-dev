@@ -22,7 +22,6 @@ jobs:
         files: /
     - name: build deploymentyaml
       run: |
-#        npm install
         npm run deploymentYaml
 # UNCOMMENT THESE LINES IF YOU WOULD LIKE TO COMMIT THE DEPLOYMENT.YAML BACK TO THE REPO  
 #     - name: Commit files
