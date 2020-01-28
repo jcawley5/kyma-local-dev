@@ -14,7 +14,7 @@
     },
     "rules": {
         "no-unused-vars": ["error", {
-            "argsIgnorePattern": "event|context"
+            "argsIgnorePattern": "event"
         }]
     }
 }
