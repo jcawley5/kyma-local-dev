@@ -19,7 +19,7 @@ jobs:
     - name: Run ESLint
       uses: stefanoeb/eslint-action@1.0.2
       with:
-        files: /
+        files: ./*.js 
     - name: build deploymentyaml
       run: |
         npm run deploymentYaml
@@ -36,11 +36,6 @@ jobs:
 #       uses: ad-m/github-push-action@master
 #       with:
 #         github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: YAML Lint
-      uses: ibiqlik/action-yamllint@v0.0.1
-      with:
-        # File(s) or Directory
-        file_or_dir: build
     - name: deploy to cluster
       uses: steebchen/kubectl@master
       env:
