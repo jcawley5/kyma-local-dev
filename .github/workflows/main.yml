@@ -18,6 +18,8 @@ jobs:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Run ESLint
       uses: stefanoeb/eslint-action@1.0.2
+      with:
+        files: *.js 
     - name: build deploymentyaml
       run: |
         npm run deploymentYaml
