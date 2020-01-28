@@ -1,4 +1,4 @@
-lname: CI
+name: kyma function deployment
 
 on:
   push:
