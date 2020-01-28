@@ -16,9 +16,13 @@ jobs:
       with:
         node-version: '12.x'
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Run ESLint
+      uses: stefanoeb/eslint-action@1.0.2
+      with:
+        files: /
     - name: build deploymentyaml
       run: |
-        npm install
+#        npm install
         npm run deploymentYaml
 # UNCOMMENT THESE LINES IF YOU WOULD LIKE TO COMMIT THE DEPLOYMENT.YAML BACK TO THE REPO  
 #     - name: Commit files
@@ -33,6 +37,11 @@ jobs:
 #       uses: ad-m/github-push-action@master
 #       with:
 #         github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: YAML Lint
+      uses: ibiqlik/action-yamllint@v0.0.1
+      with:
+        # File(s) or Directory
+        file_or_dir: build
     - name: deploy to cluster
       uses: steebchen/kubectl@master
       env:
