@@ -12,10 +12,11 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Use Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v1.1.0
       with:
-        node-version: '12.x'
+        node-version: '10.x'
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - run: npm install  
     - name: nodejs project information
       id: projectinfo
       uses: gregoranders/nodejs-project-info@v0.0.1
