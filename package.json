@@ -1,6 +1,7 @@
 {
   "name": "examplefn",
   "main": "examplefn.js",
+  "version": "0.0.1",
   "license": "Unlicense",
   "dependencies": {
     "axios": "^0.18.1"
