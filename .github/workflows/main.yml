@@ -11,42 +11,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Use Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v1.1.0
       with:
         node-version: '10.x'
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - run: npm install  
-    - name: nodejs project information
+    - name: Get nodejs project information
       id: projectinfo
       uses: gregoranders/nodejs-project-info@v0.0.1
     - name: Run ESLint
       uses: stefanoeb/eslint-action@1.0.2
       with:
         files: ${{ steps.projectinfo.outputs.name }}.js 
-    - name: build deploymentyaml
+    - name: build the deployment yaml
       run: |
         npm run deploymentYaml
-# UNCOMMENT THESE LINES IF YOU WOULD LIKE TO COMMIT THE DEPLOYMENT.YAML BACK TO THE REPO  
-#     - name: Commit files
-#       run: |
-#         echo ${{ github.ref }}
-#         git add .
-#         git config --local user.email "action@github.com"
-#         git config --local user.name "GitHub Action"
-#         git commit -m "ci: Automated build push" -a | exit 0
-#     - name: Push changes
-#       if: github.ref == 'refs/heads/master'
-#       uses: ad-m/github-push-action@master
-#       with:
-#         github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: deploy to cluster
+    - name: Deploy function to cluster
       uses: steebchen/kubectl@master
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
         args: apply -f ./build/deployment.yaml
-    - name: deployment result artifact  
+    - name: Save deployment result artifact  
       uses: actions/upload-artifact@v1
       with:
         name: deployment.yaml
