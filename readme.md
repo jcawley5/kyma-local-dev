@@ -6,7 +6,7 @@ This repo provides an example showing how to setup a local development environme
 
 After cloning the repo, within github choose `Settings` -> `Secrets` and add the secret `KUBE_CONFIG_DATA` and place a base64 encoded version of your clusters kubeconfig which can be performed by using `https://www.base64encode.org/` or via cli tools. This of course could be automated by relying on the cli tools of your cloud provider.
 
-The parameters for deployment are defined within the `package.json` within the `buildParameters` object.
+The parameters for deployment are defined within the `package.json` within the `buildParameters` object. Also important is the `name` defined in the package.json. This must match the file name of the function, in this case `examplefn.js`, that is to be deployed and is used to lint the file before deployment.
 
 ## Local Development - Kubeless
 
