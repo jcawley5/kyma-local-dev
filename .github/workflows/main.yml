@@ -36,11 +36,6 @@ jobs:
 #       uses: ad-m/github-push-action@master
 #       with:
 #         github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: YAML Lint
-      uses: ibiqlik/action-yamllint@v0.0.1
-      with:
-        # File(s) or Directory
-        file_or_dir: build
     - name: deploy to cluster
       uses: steebchen/kubectl@master
       env:
