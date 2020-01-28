@@ -2,7 +2,6 @@ const axios = require("axios");
 
 module.exports = {
   main: async function(event, context) {
-    var test = 0;
     console.log("env variable header1: ", process.env["header1"]);
 
     const Url = "https://httpbin.org/anything";
