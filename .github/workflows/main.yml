@@ -4,46 +4,49 @@ on:
   push:
     branches:
     - master
+    paths:
+    - 'lambdas/*'
 
 jobs:
   build:
-    name: checkout master
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Use Node.js
+    - name: checkout master
+      uses: actions/checkout@master
+    - name: Get Changes
+      uses: lots0logs/gh-action-get-changed-files@2.0.5
+      with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+    - run: |
+        echo "----files----"
+        cat $HOME/files.json
+        echo "----added----"
+        cat ${HOME}/files_added.json
+        echo "----modfied----"
+        cat ${HOME}/files_modified.json
+        echo "----deleted----"
+        cat ${HOME}/files_deleted.json
+    - name: Setup Node.js
       uses: actions/setup-node@v1.1.0
       with:
         node-version: '10.x'
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - run: npm install  
-    - name: nodejs project information
-      id: projectinfo
-      uses: gregoranders/nodejs-project-info@v0.0.1
     - name: Run ESLint
       uses: stefanoeb/eslint-action@1.0.2
       with:
-        files: ${{ steps.projectinfo.outputs.name }}.js 
-    - name: build deploymentyaml
+        files: lambdas/*/*.js
+    - name: Generate the deployment yaml
       run: |
-        npm run deploymentYaml
-# UNCOMMENT THESE LINES IF YOU WOULD LIKE TO COMMIT THE DEPLOYMENT.YAML BACK TO THE REPO  
-#     - name: Commit files
-#       run: |
-#         echo ${{ github.ref }}
-#         git add .
-#         git config --local user.email "action@github.com"
-#         git config --local user.name "GitHub Action"
-#         git commit -m "ci: Automated build push" -a | exit 0
-#     - name: Push changes
-#       if: github.ref == 'refs/heads/master'
-#       uses: ad-m/github-push-action@master
-#       with:
-#         github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: deploy to cluster
+        ROOTDIR=$HOME/files.json npm run deploymentYaml
+    - name: Deploy function to cluster
       uses: steebchen/kubectl@master
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
         args: apply -f ./build/deployment.yaml
+    - name: Save deployment result artifact  
+      uses: actions/upload-artifact@v1
+      with:
+        name: deployment.yaml
+        path: ./build/deployment.yaml
 
