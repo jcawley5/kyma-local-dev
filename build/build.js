@@ -4,6 +4,7 @@ const yaml = require("yaml");
 const dotenv = require("dotenv");
 const crypto = require("crypto");
 const path = require("path");
+const core = require("@actions/core");
 
 module.exports = {
   deploymentByDirChanges: function() {
@@ -21,13 +22,13 @@ module.exports = {
         let dirsepArr = filepath.split(path.sep);
         if (dirsepArr[0] === "lambdas" && directories.indexOf(dirsepArr[1]) === -1) {
           directories.push(dirsepArr[1]);
-          K_DEPLOYMENT_STR = K_DEPLOYMENT_STR + " -f " + "./build/deployments/deployment_${dirsepArr[1]}.yaml";
+          K_DEPLOYMENT_STR = `${K_DEPLOYMENT_STR} -f ./build/deployments/deployment_${dirsepArr[1]}.yaml`;
         }
       });
 
       console.log("Processing directories: ", directories);
       console.log("K_DEPLOYMENT_STR: ", K_DEPLOYMENT_STR);
-      process.env["K_DEPLOYMENT_STR"] = K_DEPLOYMENT_STR;
+      core.setOutput("K_DEPLOYMENT_STR", K_DEPLOYMENT_STR);
 
       directories.forEach(dir => {
         this.deploymentYaml(dir);
