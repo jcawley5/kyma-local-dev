@@ -13,6 +13,8 @@ jobs:
       uses: actions/checkout@master
     - name: Get Changes
       uses: trilom/file-changes-action@v1.0.0
+      with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
     - run: |
         ls $HOME
         cat $HOME/files.json
