@@ -22,13 +22,7 @@ jobs:
       run: |
         ls $HOME
         echo "----files----"
-        cat $HOME/files.json
-        echo "----modfied----"
-        cat $HOME/files_modified.json
-        echo "----added----"
-        cat $HOME/files_added.json
-        echo "----deleted----"
-        cat $HOME/files_deleted.json
+        echo '${{ steps.file_changes.outputs.files_modified}}'
     - name: Setup Node.js
       uses: actions/setup-node@v1.1.0
       with:
