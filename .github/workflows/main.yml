@@ -13,12 +13,14 @@ jobs:
     steps:
     - name: checkout master
       uses: actions/checkout@master
-    - name: Get Changes
-      uses: lots0logs/gh-action-get-changed-files@2.0.5
+    - name: Get changed files
+      id: file_changes
+      uses: trilom/file-changes-action@v1
       with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
     - name: list changed files  
       run: |
+        ls $HOME
         echo "----files----"
         cat $HOME/files.json
         echo "----modfied----"
