@@ -16,7 +16,7 @@ module.exports = {
       console.log("filesArr: ", filesArr);
 
       var directories = [];
-      const K_DEPLOYMENT_STR = "";
+      var K_DEPLOYMENT_STR = "";
       filesArr.forEach(filepath => {
         let dirsepArr = filepath.split(path.sep);
         if (dirsepArr[0] === "lambdas" && directories.indexOf(dirsepArr[1]) === -1) {
