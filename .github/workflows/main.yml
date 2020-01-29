@@ -20,13 +20,13 @@ jobs:
     - name: list changed files  
       run: |
         echo "----files----"
-        cat ${HOME}/files.json
-        echo "----added----"
-        cat ${HOME}/files_added.json
+        cat $HOME/files.json
         echo "----modfied----"
-        cat ${HOME}/files_modified.json
+        cat $HOME/files_modified.json
+        echo "----added----"
+        cat $HOME/files_added.json
         echo "----deleted----"
-        cat ${HOME}/files_deleted.json
+        cat $HOME/files_deleted.json
     - name: Setup Node.js
       uses: actions/setup-node@v1.1.0
       with:
