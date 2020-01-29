@@ -7,26 +7,27 @@ on:
 
 jobs:
   build:
-    name: checkout master
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - name: checkout master
+      uses: actions/checkout@master
+    - name: Get Changes
+      uses: trilom/file-changes-action@v1.0.0
+    - run: |
+        ls $HOME
+        cat $HOME/files.json
     - name: Setup Node.js
       uses: actions/setup-node@v1.1.0
       with:
         node-version: '10.x'
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - run: npm install  
-    - name: Get nodejs project information
-      id: projectinfo
-      uses: gregoranders/nodejs-project-info@v0.0.1
     - name: Run ESLint
       uses: stefanoeb/eslint-action@1.0.2
       with:
-        files: ${{ steps.projectinfo.outputs.name }}.js 
+        files: lambdas/*/*.js
     - name: Generate the deployment yaml
       run: |
-        npm run deploymentYaml
+        ROOTDIR=$HOME/files.json npm run deploymentYaml
     - name: Deploy function to cluster
       uses: steebchen/kubectl@master
       env:
