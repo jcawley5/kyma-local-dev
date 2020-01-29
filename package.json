@@ -25,4 +25,3 @@
     "deploymentYaml": "node -e 'require(\"./build/build\").deploymentYaml()'"
   }
 }
-q2
