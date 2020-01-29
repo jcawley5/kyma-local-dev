@@ -20,8 +20,9 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
     - name: list changed files  
       run: |
-        ls $HOME
-        echo "----files----"
+        echo "----added files----"
+        echo '${{ steps.file_changes.outputs.files_added}}'
+        echo "----modified files----"
         echo '${{ steps.file_changes.outputs.files_modified}}'
     - name: Setup Node.js
       uses: actions/setup-node@v1.1.0
@@ -32,9 +33,9 @@ jobs:
       uses: stefanoeb/eslint-action@1.0.2
       with:
         files: lambdas/*/*.js
-    - name: Generate the deployment yaml
+    - name: Generate the deployment yamls
       run: |
-        ROOTDIR=$HOME/files.json npm run deploymentYaml
+        npm run deploymentByDirChanges
     - name: Deploy function to cluster
       uses: steebchen/kubectl@master
       env:
