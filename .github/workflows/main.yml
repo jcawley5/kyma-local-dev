@@ -41,10 +41,10 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        args: apply -f ./build/deployment.yaml
+        args: apply ${{ K_DEPLOYMENT_STR }}
     - name: Save deployment result artifact  
       uses: actions/upload-artifact@v1
       with:
         name: deployment.yaml
-        path: ./build/deployment.yaml
+        path: ./build/deployments
 
