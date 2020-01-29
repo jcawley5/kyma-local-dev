@@ -32,7 +32,7 @@ The file `localdevenv.js` was added to enabled the support of envirnoment variab
 
 ## Building the deployment.yaml locally
 
-To build the deployment.yaml locally run within the project root
+To build the deployment.yaml for a single function locally run within the project root
 
 `FUNCTIONDIR=examplefn npm run deploymentYaml`
 

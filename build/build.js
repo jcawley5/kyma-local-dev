@@ -6,8 +6,28 @@ const crypto = require("crypto");
 const path = require("path");
 
 module.exports = {
-  deploymentYaml: function() {
-    const functionDir = path.join("./lambdas", process.env.FUNCTIONDIR);
+  deploymentByDirChanges: function() {
+    fs.readFileSync("$HOME/files_modified.json");
+
+    console.log(filesArr);
+    const dirsArr = filesArr.map(filepath => filepath.split("/")[1]);
+
+    dirsArr.forEach(dir => {
+      console.log(dir);
+      this.deploymentYaml(dir);
+    });
+  },
+
+  deploymentYaml: function(directory) {
+    const rootDir = process.env.FUNCTIONDIR || directory;
+
+    console.log("processing", rootDir);
+
+    if (rootDir === undefined) {
+      return;
+    }
+
+    const functionDir = path.join("./lambdas", rootDir);
 
     const deploymentJSON = JSON.parse(fs.readFileSync("./build/deployment-template.json"));
 
@@ -53,6 +73,6 @@ module.exports = {
     params.horizontalPodAutoscaler = parameterize(horizontalPodAutoscalerJSON, params);
 
     const deploymentYAML = parameterize(deploymentJSON, params);
-    fs.writeFileSync(`./build/deployment.yaml`, yaml.stringify(deploymentYAML));
+    fs.writeFileSync(`./build/deployment_${rootDir}.yaml`, yaml.stringify(deploymentYAML));
   }
 };
