@@ -4,6 +4,8 @@ on:
   push:
     branches:
     - master
+    paths:
+    - 'lambdas/*'
 
 jobs:
   build:
@@ -12,12 +14,18 @@ jobs:
     - name: checkout master
       uses: actions/checkout@master
     - name: Get Changes
-      uses: trilom/file-changes-action@v1.0.0
+      uses: lots0logs/gh-action-get-changed-files@2.0.5
       with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
     - run: |
-        ls $HOME
+        echo "----files----"
         cat $HOME/files.json
+        echo "----added----"
+        cat ${HOME}/files_added.json
+        echo "----modfied----"
+        cat ${HOME}/files_modified.json
+        echo "----deleted----"
+        cat ${HOME}/files_deleted.json
     - name: Setup Node.js
       uses: actions/setup-node@v1.1.0
       with:
