@@ -8,7 +8,7 @@ metadata:
   name: examplefn
   namespace: stage
 spec:
-  checksum: sha256:d052fe07dac6f3001098f438fa6d9db0bddade313e6976cc3aee53369f3e16f9
+  checksum: sha256:9cedcd331d90433e28ee44c5197c37d0583a3fbe938a25513e18090deafee607
   deployment:
     spec:
       template:
@@ -16,26 +16,18 @@ spec:
           containers:
             - env:
                 - name: header1
-                  value: testheader
+                  value: testheaderValue1
                 - name: param2
                   value: value2
               name: examplefn
-  deps: >
+  deps: |
     {
       "name": "examplefn",
-      "main": "examplefn.js",
+      "main": "main.js",
+      "version": "0.0.1",
       "license": "Unlicense",
       "dependencies": {
         "axios": "^0.18.1"
-      },
-      "devDependencies": {
-        "dotenv": "^8.2.0",
-        "fs": "0.0.1-security",
-        "json-parameterization": "^2.0.0",
-        "yaml": "^1.7.2"
-      },
-      "scripts": {
-        "deploymentYaml": "node -e 'require(\"./build/build\").deploymentYaml()'"
       },
       "buildParameters": {
         "function_trigger": "http",
@@ -51,7 +43,7 @@ spec:
         console.log("env variable header1: ", process.env["header1"]);
 
         const Url = "https://httpbin.org/anything";
-        console.log("sending test four get to ", Url);
+        console.log("sending an example get to ", Url);
         const { data: result } = await axios.get(Url, {
           params: { header1: process.env.header1 }
         });

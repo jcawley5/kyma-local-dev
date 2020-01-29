@@ -6,31 +6,39 @@ This repo provides an example showing how to setup a local development environme
 
 After cloning the repo, within github choose `Settings` -> `Secrets` and add the secret `KUBE_CONFIG_DATA` and place a base64 encoded version of your clusters kubeconfig which can be performed by using `https://www.base64encode.org/` or via cli tools. This of course could be automated by relying on the cli tools of your cloud provider.
 
-The parameters for deployment are defined within the `package.json` within the `buildParameters` object. Also important is the `name` defined in the package.json. This must match the file name of the function, in this case `examplefn.js`, that is to be deployed and is used to lint the file before deployment.
+The parameters for deployment are defined within the `package.json` of the function within the `buildParameters` object. Also important is the `name` and `main` defined in the package.json. This `name` must match the folder name of the function, in this case `examplefn`. The `main` property is used to determine the actually function defintion, in this case `main.js`.
 
 ## Local Development - Kubeless
 
-Local development relies on kubeless runtime which can be found at
+The project contains the necessary kubeless configuration to run functions locally which is based on
 
 `https://github.com/kubeless/runtimes/tree/master/stable/nodejs`
 
-The necessary files are found in the localdev folder. To run locally, first install the kubeless components by running
+To run locally, first install the kubeless components by running
 
 `npm install`
 
-within the localdev folder. The function can then be called by running
+within the root folder and then within the lambdas function folder. The function can then be called within the project root by running
 
-`MOD_NAME=../examplefn FUNC_HANDLER=main node kubeless.js`
+`MOD_NAME=../kyma-git-action/lambdas/examplefn/main FUNC_HANDLER=main node kubeless.js`
 
 Which will make it available at
 
 `http://localhost:8080/`
 
-The file `localdevenv.js` was added to enabled the support of envirnoment variables where as the envirnoment variables used by the function are defined in `.env`.
+### Envirnoment variables
+
+The file `localdevenv.js` was added to enabled the support of envirnoment variables. Any envirnoment variables used by the function should be defined in `.env` within the function directory. Any local or service bindings should be defined within the `localdevenv.js` itself.
+
+## Building the deployment.yaml locally
+
+To build the deployment.yaml locally run within the project root
+
+`FUNCTIONDIR=examplefn npm run deploymentYaml`
 
 ## Local Development - Service Bindings
 
-Service Bindings that are configured in the kyma ui should be referenced within the localdevenv file and can be made available by using the port-forward feature of kubectl for example
+Service Bindings that are configured in the kyma ui should be referenced within the `lib/localdevenv.js` file and can be made available by using the port-forward feature of kubectl for example
 
 `kubectl port-forward services/d13-commerce-01-3afe958e-6603-45f1-bdbb-789a676b5fa9 8088:80 -n kyma-integration`
 
@@ -38,7 +46,7 @@ The service name can be found in the function defintion as deployed on the clust
 
 `kubectl get function examplefn -n stage -o yaml`
 
-and referring to the `servicebindingusages` values found in the `kubectl.kubernetes.io/last-applied-configuration` property.
+by referring to the `servicebindingusages` values found in the `kubectl.kubernetes.io/last-applied-configuration` property.
 
 Local access to the service would then be acheivable via
 

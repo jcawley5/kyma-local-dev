@@ -10,9 +10,6 @@ const express = require("express");
 const helper = require("./lib/helper");
 const morgan = require("morgan");
 
-//added for env variables!!!
-require("./localdevenv");
-
 const bodySizeLimit = Number(process.env.REQ_MB_LIMIT || "1");
 
 const app = express();
@@ -31,8 +28,14 @@ const timeout = Number(process.env.FUNC_TIMEOUT || "180");
 const funcPort = Number(process.env.FUNC_PORT || "8080");
 
 const modKubeless = require.main.filename;
-const modRootPath = path.join(modKubeless, "..", "..", "kubeless");
+console.log(modKubeless);
 
+//added for env variables!!!
+const projectDir = path.join(modKubeless, "..", modName, "..");
+require("./lib/localdevenv")(projectDir);
+
+const modRootPath = path.join(modKubeless, "..", "..", "kubeless");
+console.log(modRootPath);
 const modPath = path.join(modRootPath, `${modName}.js`);
 const libPath = path.join(modRootPath, "node_modules");
 const pkgPath = path.join(modRootPath, "package.json");
