@@ -22,7 +22,7 @@ module.exports = {
         let dirsepArr = filepath.split(path.sep);
         if (dirsepArr[0] === "lambdas" && directories.indexOf(dirsepArr[1]) === -1) {
           directories.push(dirsepArr[1]);
-          K_DEPLOYMENT_STR = `${K_DEPLOYMENT_STR} -f ./build/deployments/deployment_${dirsepArr[1]}.yaml`;
+          K_DEPLOYMENT_STR = `${K_DEPLOYMENT_STR} -f ./build/deployment_${dirsepArr[1]}.yaml`;
         }
       });
 
@@ -93,6 +93,6 @@ module.exports = {
     params.horizontalPodAutoscaler = parameterize(horizontalPodAutoscalerJSON, params);
 
     const deploymentYAML = parameterize(deploymentJSON, params);
-    fs.writeFileSync(`./build/deployments/deployment_${rootDir}.yaml`, yaml.stringify(deploymentYAML));
+    fs.writeFileSync(`./build/deployment_${rootDir}.yaml`, yaml.stringify(deploymentYAML));
   }
 };
