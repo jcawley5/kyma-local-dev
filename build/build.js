@@ -7,21 +7,36 @@ const path = require("path");
 
 module.exports = {
   deploymentByDirChanges: function() {
-    fs.readFileSync("$HOME/files_modified.json");
+    try {
+      const modFilesArr = JSON.parse(fs.readFileSync(`${process.env.HOME}/files_modified.json`));
+      const addedFilesArr = JSON.parse(fs.readFileSync(`${process.env.HOME}/files_added.json`));
 
-    console.log(filesArr);
-    const dirsArr = filesArr.map(filepath => filepath.split("/")[1]);
+      const filesArr = [...modFilesArr, ...addedFilesArr];
 
-    dirsArr.forEach(dir => {
-      console.log(dir);
-      this.deploymentYaml(dir);
-    });
+      console.log("filesArr: ", filesArr);
+
+      var directories = [];
+      filesArr.forEach(filepath => {
+        let dirsepArr = filepath.split(path.sep);
+        if (dirsepArr[0] === "lambdas" && directories.indexOf(dirsepArr[1]) === -1) {
+          directories.push(dirsepArr[1]);
+        }
+      });
+
+      console.log("Processing directories: ", directories);
+
+      directories.forEach(dir => {
+        this.deploymentYaml(dir);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   deploymentYaml: function(directory) {
     const rootDir = process.env.FUNCTIONDIR || directory;
 
-    console.log("processing", rootDir);
+    console.log("creating deployment for: ", rootDir);
 
     if (rootDir === undefined) {
       return;
