@@ -5,7 +5,7 @@ on:
     branches:
     - master
     paths:
-    - 'lambdas/*'
+    - 'lambdas/**'
 
 jobs:
   build:
