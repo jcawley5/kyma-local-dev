@@ -16,14 +16,18 @@ module.exports = {
       console.log("filesArr: ", filesArr);
 
       var directories = [];
+      const K_DEPLOYMENT_STR = "";
       filesArr.forEach(filepath => {
         let dirsepArr = filepath.split(path.sep);
         if (dirsepArr[0] === "lambdas" && directories.indexOf(dirsepArr[1]) === -1) {
           directories.push(dirsepArr[1]);
+          K_DEPLOYMENT_STR = K_DEPLOYMENT_STR + " -f " + "./build/deployments/deployment_${dirsepArr[1]}.yaml";
         }
       });
 
       console.log("Processing directories: ", directories);
+      console.log("K_DEPLOYMENT_STR: ", K_DEPLOYMENT_STR);
+      process.env["K_DEPLOYMENT_STR"] = K_DEPLOYMENT_STR;
 
       directories.forEach(dir => {
         this.deploymentYaml(dir);
@@ -88,6 +92,6 @@ module.exports = {
     params.horizontalPodAutoscaler = parameterize(horizontalPodAutoscalerJSON, params);
 
     const deploymentYAML = parameterize(deploymentJSON, params);
-    fs.writeFileSync(`./build/deployment_${rootDir}.yaml`, yaml.stringify(deploymentYAML));
+    fs.writeFileSync(`./build/deployments/deployment_${rootDir}.yaml`, yaml.stringify(deploymentYAML));
   }
 };
