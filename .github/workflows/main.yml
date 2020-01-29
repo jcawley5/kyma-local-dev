@@ -17,9 +17,10 @@ jobs:
       uses: lots0logs/gh-action-get-changed-files@2.0.5
       with:
           token: ${{ secrets.GITHUB_TOKEN }}
-    - run: |
+    - name: list changed files  
+      run: |
         echo "----files----"
-        cat $HOME/files.json
+        cat ${HOME}/files.json
         echo "----added----"
         cat ${HOME}/files_added.json
         echo "----modfied----"
