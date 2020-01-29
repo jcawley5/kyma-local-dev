@@ -34,6 +34,7 @@ jobs:
       with:
         files: lambdas/*/*.js
     - name: Generate the deployment yamls
+      id: gen_yaml
       run: |
         npm run deploymentByDirChanges
     - name: Deploy function to cluster
@@ -41,7 +42,7 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        args: apply $K_DEPLOYMENT_STR
+        args: apply ${{ steps.gen_yaml.outputs.K_DEPLOYMENT_STR }}
     - name: Save deployment result artifact  
       uses: actions/upload-artifact@v1
       with:
