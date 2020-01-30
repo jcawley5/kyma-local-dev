@@ -1,12 +1,7 @@
 # About
 
-This repo provides an example showing how to setup a local development environment for building nodejs serverless functions, based on [Kubeless](https://kubeless.io/), to be deployed on [Kyma](https://kyma-project.io/). Deployments are automated using a git action which builds a deployment.yaml which is then deployed to the Kyma cluster.
+This repo provides an example showing how to setup a local development environment for building nodejs serverless functions, based on [Kubeless](https://kubeless.io/), to be deployed on [Kyma](https://kyma-project.io/). Deployments can then be automated using a git action which builds a deployment.yaml that is then deployed to the Kyma cluster.
 
-## Deployment via git action.
-
-After cloning the repo, within github choose `Settings` -> `Secrets` and add the secret `KUBE_CONFIG_DATA` and place a base64 encoded version of your clusters kubeconfig which can be performed by using `https://www.base64encode.org/` or via cli tools. This of course could be automated by relying on the cli tools of your cloud provider.
-
-The parameters for deployment are defined within the `package.json` of the function within the `buildParameters` object. Also important is the `name` and `main` defined in the package.json. This `name` must match the folder name of the function, in this case `examplefn`. The `main` property is used to determine the actually function defintion, in this case `main.js`.
 
 ## Local Development - Kubeless
 
@@ -20,7 +15,7 @@ To run locally, first install the kubeless components by running
 
 within the root folder and then within the lambdas function folder. The function can then be called within the project root by running
 
-`MOD_NAME=../kyma-git-action/lambdas/examplefn/main FUNC_HANDLER=main node kubeless.js`
+`MOD_NAME=../kyma-git-action/lambdas/examplefn/main FUNC_HANDLER=main node runlocal.js`
 
 Which will make it available at
 
@@ -55,3 +50,9 @@ Local access to the service would then be acheivable via
 For correct resolution of the service a DNS entry in your hosts file will need to be added
 
 `127.0.0.1 3afe958e-6603-45f1-bdbb-789a676b5fa9.localhost`
+
+## Deployment via git action.
+
+After cloning/forking the repo, open the repo within your github account and choose `Settings` -> `Secrets`.  Add the secret `KUBE_CONFIG_DATA` and place a base64 encoded version of your clusters kubeconfig which can be performed by using `https://www.base64encode.org/` or via cli tools. This of course could be automated by relying on the cli tools of your cloud provider.
+
+The parameters for deployment are defined within the `package.json` of the function within the `buildParameters` object. Also important is the `name` and `main` defined in the package.json. This `name` must match the folder name of the function, in this case `examplefn`. The `main` property is used to determine the actually function defintion, in this case `main.js`.

@@ -28,23 +28,13 @@ const timeout = Number(process.env.FUNC_TIMEOUT || "180");
 const funcPort = Number(process.env.FUNC_PORT || "8080");
 
 const modKubeless = require.main.filename;
-console.log(modKubeless);
-
-//added for env variables!!!
-const projectDir = path.join(modKubeless, "..", modName, "..");
-require("./lib/localdevenv")(projectDir);
-
 const modRootPath = path.join(modKubeless, "..", "..", "kubeless");
-console.log(modRootPath);
 const modPath = path.join(modRootPath, `${modName}.js`);
 const libPath = path.join(modRootPath, "node_modules");
 const pkgPath = path.join(modRootPath, "package.json");
 const libDeps = helper.readDependencies(pkgPath);
 
-const { timeHistogram, callsCounter, errorsCounter } = helper.prepareStatistics(
-  "method",
-  client
-);
+const { timeHistogram, callsCounter, errorsCounter } = helper.prepareStatistics("method", client);
 helper.routeLivenessProbe(app);
 helper.routeMetrics(app, client);
 
@@ -55,19 +45,15 @@ const context = {
   "memory-limit": process.env.FUNC_MEMORY_LIMIT
 };
 
-const script = new vm.Script(
-  "\nrequire('kubeless')(require('" + modPath + "'));\n",
-  {
-    filename: modPath,
-    displayErrors: true
-  }
-);
+const script = new vm.Script("\nrequire('kubeless')(require('" + modPath + "'));\n", {
+  filename: modPath,
+  displayErrors: true
+});
 
 function modRequire(p, req, res, end) {
   if (p === "kubeless") return handler => modExecute(handler, req, res, end);
   else if (libDeps.includes(p)) return require(path.join(libPath, p));
-  else if (p.indexOf("./") === 0)
-    return require(path.join(path.dirname(modPath), p));
+  else if (p.indexOf("./") === 0) return require(path.join(path.dirname(modPath), p));
   else return require(p);
 }
 
@@ -144,14 +130,8 @@ app.all("*", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   if (req.method === "OPTIONS") {
     // CORS preflight support (Allow any method or header requested)
-    res.header(
-      "Access-Control-Allow-Methods",
-      req.headers["access-control-request-method"]
-    );
-    res.header(
-      "Access-Control-Allow-Headers",
-      req.headers["access-control-request-headers"]
-    );
+    res.header("Access-Control-Allow-Methods", req.headers["access-control-request-method"]);
+    res.header("Access-Control-Allow-Headers", req.headers["access-control-request-headers"]);
     res.end();
   } else {
     const label = funcLabel(req);
