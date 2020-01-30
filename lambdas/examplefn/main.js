@@ -5,7 +5,7 @@ module.exports = {
     console.log("env variable header 1 - test 1: ", process.env["header1"]);
 
     const Url = "https://httpbin.org/anything";
-    console.log("sending an example 2 get to ", Url);
+    console.log("sending example get to ", Url);
     const { data: result } = await axios.get(Url, {
       params: { header1: process.env.header1 }
     });

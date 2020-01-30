@@ -79,7 +79,6 @@ module.exports = {
       environment_variables: envArr,
       function_deps: packageStr,
       function_code: lamdbdCode,
-      function_trigger: packageJSON.buildParameters.function_trigger,
       namespace: packageJSON.buildParameters.namespace,
       checksum: sha256Str
     };
