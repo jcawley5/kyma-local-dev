@@ -23,17 +23,11 @@ Which will make it available at
 
 ### Envirnoment variables
 
-The file `localdevenv.js` was added to enabled the support of envirnoment variables. Any envirnoment variables used by the function should be defined in `.env` within the function directory. Any local or service bindings should be defined within the `localdevenv.js` itself.
-
-## Building the deployment.yaml locally
-
-To build the deployment.yaml for a single function locally run within the project root
-
-`FUNCTIONDIR=examplefn npm run deploymentYaml`
+Any envirnoment variables used by the function should be defined in `.env` within the function directory. If any local variables or service bindings are needed these should be defined within the `runlocal.js`.
 
 ## Local Development - Service Bindings
 
-Service Bindings that are configured in the kyma ui should be referenced within the `lib/localdevenv.js` file and can be made available by using the port-forward feature of kubectl for example
+Service Bindings that are configured in the kyma ui should be referenced within the `runlocal.js` file and can be made available by using the port-forward feature of kubectl for example
 
 `kubectl port-forward services/d13-commerce-01-3afe958e-6603-45f1-bdbb-789a676b5fa9 8088:80 -n kyma-integration`
 
@@ -50,6 +44,14 @@ Local access to the service would then be acheivable via
 For correct resolution of the service a DNS entry in your hosts file will need to be added
 
 `127.0.0.1 3afe958e-6603-45f1-bdbb-789a676b5fa9.localhost`
+
+## Building the deployment.yaml locally
+
+To build the deployment.yaml for a single function locally run within the project root
+
+`FUNCTIONDIR=examplefn npm run deploymentYaml`
+
+this will generate the file `deployment_<FUNCTIONDIR>.yaml` and save it into the `build/deployements` folder.
 
 ## Deployment via git action.
 
