@@ -7,7 +7,7 @@
     "axios": "^0.18.1"
   },
   "buildParameters": {
-    "function_trigger": "http",
+    "function_trigger": "",
     "function_size": "XS",
     "namespace": "stage"
   }

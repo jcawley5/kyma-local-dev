@@ -17,10 +17,12 @@
       "spec": {
         "template": {
           "spec": {
-            "containers": [{
-              "env": "{{environment_variables}}",
-              "name": "{{function_name}}"
-            }]
+            "containers": [
+              {
+                "env": "{{environment_variables}}",
+                "name": "{{function_name}}"
+              }
+            ]
           }
         }
       }
@@ -31,7 +33,6 @@
     "handler": "handler.main",
     "horizontalPodAutoscaler": "{{horizontalPodAutoscaler}}",
     "runtime": "nodejs8",
-    "timeout": "",
-    "topic": "{{function_trigger}}"
+    "timeout": ""
   }
 }
