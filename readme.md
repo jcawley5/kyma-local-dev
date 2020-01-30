@@ -1,7 +1,6 @@
 # About
 
-This repo provides an example showing how to setup a local development environment for building nodejs serverless functions, based on [Kubeless](https://kubeless.io/), to be deployed on [Kyma](https://kyma-project.io/). Deployments can then be automated using a git action which builds a deployment.yaml that is then deployed to the Kyma cluster.
-
+This repo provides an example showing how to setup a local development environment for building [Kyma](https://kyma-project.io/)] serverless functions, based on [Kubeless](https://kubeless.io/). Deployments are automated using a git action which generates a deployment.yaml and deploys it to the Kyma cluster.
 
 ## Local Development - Kubeless
 
@@ -55,6 +54,6 @@ this will generate the file `deployment_<FUNCTIONDIR>.yaml` and save it into the
 
 ## Deployment via git action.
 
-After cloning/forking the repo, open the repo within your github account and choose `Settings` -> `Secrets`.  Add the secret `KUBE_CONFIG_DATA` and place a base64 encoded version of your clusters kubeconfig which can be performed by using `https://www.base64encode.org/` or via cli tools. This of course could be automated by relying on the cli tools of your cloud provider.
+After cloning/forking the repo, open the repo within your github account and choose `Settings` -> `Secrets`. Add the secret `KUBE_CONFIG_DATA` and place a base64 encoded version of your clusters kubeconfig which can be performed by using `https://www.base64encode.org/` or via cli tools. This of course could be automated by relying on the cli tools of your cloud provider.
 
 The parameters for deployment are defined within the `package.json` of the function within the `buildParameters` object. Also important is the `name` and `main` defined in the package.json. This `name` must match the folder name of the function, in this case `examplefn`. The `main` property is used to determine the actually function defintion, in this case `main.js`.
