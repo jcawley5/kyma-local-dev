@@ -33,18 +33,6 @@
     "handler": "handler.main",
     "horizontalPodAutoscaler": "{{horizontalPodAutoscaler}}",
     "runtime": "nodejs8",
-    "service": {
-      "ports": {
-        "name": "http-function-port",
-        "port": "8080",
-        "protocol": "TCP",
-        "targetPort": "8080"
-      },
-      "selector": {
-        "created-by": "kubeless",
-        "function": "{{function_name}}"
-      }
-    },
     "timeout": ""
   }
 }
