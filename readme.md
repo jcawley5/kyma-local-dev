@@ -1,6 +1,6 @@
 # About
 
-This repo provides an example showing how to setup a local development environment for building [Kyma](https://kyma-project.io/)] serverless functions, based on [Kubeless](https://kubeless.io/). Deployments are then automated using a git action which generates a deployment.yaml and deploys it to the Kyma cluster.
+This repo provides an example showing how to setup a local development environment for building [Kyma](https://kyma-project.io/)] serverless functions, based on [Kubeless](https://kubeless.io/). Deployments are then automated using a git action which generates a deployment.yaml per fuction and deploys them to the Kyma cluster.
 
 ## Local Development - Kubeless
 
