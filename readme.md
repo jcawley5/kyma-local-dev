@@ -4,15 +4,15 @@ This repo provides an example showing how to setup a local development environme
 
 ## Local Development - Kubeless
 
-The project contains the necessary kubeless configuration to run functions locally which is based on
+The project contains the necessary minimal configuration to run functions locally which is based on
 
 `https://github.com/kubeless/runtimes/tree/master/stable/nodejs`
 
-To run locally, first install the kubeless components by running
+To run locally, first install the components required by kubeless by running
 
 `npm install`
 
-within the root folder and then within the lambdas function folder. The function can then be called within the project root by running
+within the root folder and then within each lambda function folder. The function can then be called within the project root by running
 
 `MOD_NAME=../kyma-local-dev/lambdas/examplefn/main FUNC_HANDLER=main node runlocal.js`
 
