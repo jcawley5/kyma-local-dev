@@ -49,7 +49,7 @@ module.exports = {
 
     const functionDir = path.join("./lambdas", rootDir);
 
-    var deploymentJSON = JSON.parse(fs.readFileSync("./build/deployment-template.json"));
+    var deploymentJSON = JSON.parse(fs.readFileSync("./build/templates/deployment-template.json"));
 
     const packageStr = fs.readFileSync(path.join(functionDir, "package.json")).toString();
     const packageJSON = JSON.parse(packageStr);
@@ -85,7 +85,9 @@ module.exports = {
 
     const horizontalPodAutoscalerJSON = JSON.parse(
       fs
-        .readFileSync("./build/horizontalPodAutoscaler_" + packageJSON.buildParameters.function_size + ".json")
+        .readFileSync(
+          "./build/templates/horizontalPodAutoscaler_" + packageJSON.buildParameters.function_size + ".json"
+        )
         .toString()
     );
 
@@ -97,7 +99,7 @@ module.exports = {
 
     if (packageJSON.buildParameters.enable_api) {
       console.log("enabling api for function");
-      const apiJSON = JSON.parse(fs.readFileSync("./build/api-template.json").toString());
+      const apiJSON = JSON.parse(fs.readFileSync("./build/templates/api-template.json").toString());
       const apiYAML = parameterize(apiJSON, params);
       yamlStr += "\n---\n" + yaml.stringify(apiYAML);
     }

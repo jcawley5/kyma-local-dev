@@ -6,7 +6,7 @@ metadata:
   labels:
     app: examplefn
   name: examplefn
-  namespace: default
+  namespace: stage
 spec:
   checksum: sha256:ec08bb598fb348765ae4e84e51ff71e6a6a78ac30aa9d0cf1043aa14cf8b9933
   deployment:
@@ -31,7 +31,7 @@ spec:
       },
       "buildParameters": {
         "function_size": "XS",
-        "namespace": "default",
+        "namespace": "stage",
         "enable_api": true
       }
     }
@@ -59,7 +59,7 @@ spec:
       labels:
         function: examplefn
       name: examplefn
-      namespace: default
+      namespace: stage
     spec:
       maxReplicas: 1
       metrics:
@@ -80,9 +80,8 @@ apiVersion: gateway.kyma-project.io/v1alpha2
 kind: Api
 metadata:
   name: examplefn
-  namespace: default
+  namespace: stage
 spec:
-  authentication: []
   hostname: examplefn
   service:
     name: examplefn

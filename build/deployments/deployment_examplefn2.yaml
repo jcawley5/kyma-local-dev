@@ -29,7 +29,8 @@ spec:
       },
       "buildParameters": {
         "function_size": "XS",
-        "namespace": "stage"
+        "namespace": "stage",
+        "enable_api": false
       }
     }
   function: >
