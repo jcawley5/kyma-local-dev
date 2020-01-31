@@ -1,10 +1,9 @@
 const path = require("path");
-
 const modKubeless = require.main.filename;
 const modName = process.env.MOD_NAME;
-const projectDir = path.join(modKubeless, "..", modName, "..", ".env");
+const projectEnvVar = path.join(modKubeless, "..", modName, "..", ".env");
 
-require("dotenv").config({ path: projectDir });
+require("dotenv").config({ path: projectEnvVar });
 require("./localdev/kubeless");
 
 console.log(`Starting server on ${process.env.FUNC_PORT || "8080"}`);
