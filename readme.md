@@ -32,7 +32,7 @@ Service Bindings that are configured in the kyma ui should be referenced within 
 
 The service name can be found in the function defintion as deployed on the cluster by running
 
-`kubectl get function examplefn -n stage -o yaml`
+`kubectl get function examplefn2 -n stage -o yaml`
 
 by referring to the `servicebindingusages` values found in the `kubectl.kubernetes.io/last-applied-configuration` property.
 
@@ -43,6 +43,8 @@ Local access to the service would then be acheivable via
 For correct resolution of the service a DNS entry in your hosts file will need to be added
 
 `127.0.0.1 3afe958e-6603-45f1-bdbb-789a676b5fa9.localhost`
+
+The examplefn2 is configured in this way.
 
 ## Building the deployment.yaml locally
 
