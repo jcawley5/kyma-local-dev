@@ -1,6 +1,6 @@
 {
   "name": "examplefn",
-  "main": "main.js",
+  "main": "app.js",
   "version": "0.0.1",
   "license": "Unlicense",
   "dependencies": {
