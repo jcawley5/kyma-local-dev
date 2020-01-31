@@ -1,0 +1,16 @@
+{
+  "apiVersion": "gateway.kyma-project.io/v1alpha2",
+  "kind": "Api",
+  "metadata": {
+    "name": "{{function_name}}",
+    "namespace": "{{namespace}}"
+  },
+  "spec": {
+    "authentication": [],
+    "hostname": "{{function_name}}",
+    "service": {
+      "name": "{{function_name}}",
+      "port": 8080
+    }
+  }
+}

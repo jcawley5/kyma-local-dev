@@ -6,9 +6,9 @@ metadata:
   labels:
     app: examplefn
   name: examplefn
-  namespace: stage
+  namespace: default
 spec:
-  checksum: sha256:27660e49f812881725c916ed0e55a15d090ad96f1dee53e1cdc652f30d8f1e97
+  checksum: sha256:ec08bb598fb348765ae4e84e51ff71e6a6a78ac30aa9d0cf1043aa14cf8b9933
   deployment:
     spec:
       template:
@@ -16,7 +16,7 @@ spec:
           containers:
             - env:
                 - name: header1
-                  value: testheader
+                  value: testheadernew
                 - name: param2
                   value: value2
               name: examplefn
@@ -30,9 +30,9 @@ spec:
         "axios": "^0.18.1"
       },
       "buildParameters": {
-        "function_trigger": "http",
         "function_size": "XS",
-        "namespace": "stage"
+        "namespace": "default",
+        "enable_api": true
       }
     }
   function: |
@@ -43,7 +43,7 @@ spec:
         console.log("env variable header 1 - test 1: ", process.env["header1"]);
 
         const Url = "https://httpbin.org/anything";
-        console.log("sending an example 2 get to ", Url);
+        console.log("sending test get to ", Url);
         const { data: result } = await axios.get(Url, {
           params: { header1: process.env.header1 }
         });
@@ -59,7 +59,7 @@ spec:
       labels:
         function: examplefn
       name: examplefn
-      namespace: stage
+      namespace: default
     spec:
       maxReplicas: 1
       metrics:
@@ -74,4 +74,16 @@ spec:
         name: examplefn
   runtime: nodejs8
   timeout: ""
-  topic: http
+
+---
+apiVersion: gateway.kyma-project.io/v1alpha2
+kind: Api
+metadata:
+  name: examplefn
+  namespace: default
+spec:
+  authentication: []
+  hostname: examplefn
+  service:
+    name: examplefn
+    port: 8080

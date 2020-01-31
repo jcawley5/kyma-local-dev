@@ -49,7 +49,7 @@ module.exports = {
 
     const functionDir = path.join("./lambdas", rootDir);
 
-    const deploymentJSON = JSON.parse(fs.readFileSync("./build/deployment-template.json"));
+    var deploymentJSON = JSON.parse(fs.readFileSync("./build/deployment-template.json"));
 
     const packageStr = fs.readFileSync(path.join(functionDir, "package.json")).toString();
     const packageJSON = JSON.parse(packageStr);
@@ -93,10 +93,19 @@ module.exports = {
 
     const deploymentYAML = parameterize(deploymentJSON, params);
 
+    var yamlStr = yaml.stringify(deploymentYAML);
+
+    if (packageJSON.buildParameters.enable_api) {
+      console.log("enabling api for function");
+      const apiJSON = JSON.parse(fs.readFileSync("./build/api-template.json").toString());
+      const apiYAML = parameterize(apiJSON, params);
+      yamlStr += "\n---\n" + yaml.stringify(apiYAML);
+    }
+
     if (!fs.existsSync("./build/deployments")) {
       fs.mkdirSync("./build/deployments");
     }
 
-    fs.writeFileSync(`./build/deployments/deployment_${rootDir}.yaml`, yaml.stringify(deploymentYAML));
+    fs.writeFileSync(`./build/deployments/deployment_${rootDir}.yaml`, yamlStr);
   }
 };
