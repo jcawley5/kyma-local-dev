@@ -8,7 +8,7 @@
   },
   "buildParameters": {
     "function_size": "XS",
-    "namespace": "test",
+    "namespace": "stage",
     "enable_api": true
   }
 }
