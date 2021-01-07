@@ -14,7 +14,7 @@ To run locally, first install the components required by kubeless by running
 
 within the root folder and then within each lambda function folder. The function can then be called within the project root by running
 
-`MOD_NAME=../kyma-local-dev/lambdas/examplefn/app FUNC_HANDLER=main node runlocal.js`
+`MOD_NAME=../kyma-local-dev/lambdas/examplefn/handler FUNC_HANDLER=main node runlocal.js`
 
 Which will make it available at
 
